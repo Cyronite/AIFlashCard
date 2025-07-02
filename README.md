@@ -106,10 +106,4 @@ The frontend will run on [http://localhost:5173](http://localhost:5173) and the 
 - `OPENAI_API_KEY` – Your OpenAI API key.
 - `DATABASE_URL` – Your PostgreSQL connection string.
 
-## License
 
-MIT
-
----
-
-**Note:** Never commit your `.env` file or API keys to
