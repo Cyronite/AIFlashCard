@@ -1,7 +1,7 @@
 import logo from '../assets/logo.png';
 import { useState } from 'react';
 
-export default function Nav() {
+export default function Nav({ onSignIn, onSignUp, onNavigate }: { onSignIn: () => void, onSignUp: () => void, onNavigate: () => void }) {
     const [menuOpen, setMenuOpen] = useState(false);
     return (
         <nav className="w-full h-20 flex justify-center items-center bg-gradient-to-b from-[#f5efe6] to-[#e9e4d8] shadow-md fixed top-0 left-0 z-50 border-b border-[#e0d9c7]">
@@ -13,16 +13,16 @@ export default function Nav() {
                 </div>
                 {/* Center: Navigation Links (hidden on mobile) */}
                 <div className="hidden md:flex gap-8">
-                    <a href="#home" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium">Home</a>
-                    <a href="#features" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium">Features</a>
-                    <a href="#about" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium">About</a>
-                    <a href="#faq" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium">FAQ</a>
-                    <a href="#contact" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium">Contact</a>
+                    <a href="#home" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium" onClick={onNavigate}>Home</a>
+                    <a href="#features" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium" onClick={onNavigate}>Features</a>
+                    <a href="#about" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium" onClick={onNavigate}>About</a>
+                    <a href="#faq" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium" onClick={onNavigate}>FAQ</a>
+                    <a href="#contact" className="text-[#4f5d75] hover:text-[#2d3142] transition font-medium" onClick={onNavigate}>Contact</a>
                 </div>
                 {/* Right: Auth Buttons (hidden on mobile) */}
                 <div className="hidden md:flex gap-3 h-10">
-                    <button className="bg-[#2d3142] text-[#f5efe6] px-4 py-2 rounded-full hover:bg-[#4f5d75] transition font-bold shadow">Sign In</button>
-                    <button className="bg-[#f5efe6] border border-[#2d3142] text-[#2d3142] px-4 py-2 rounded-full hover:bg-[#e9e4d8] transition font-bold shadow">Sign Up</button>
+                    <button className="bg-[#2d3142] text-[#f5efe6] px-4 py-2 rounded-full hover:bg-[#4f5d75] transition font-bold shadow" onClick={onSignIn}>Sign In</button>
+                    <button className="bg-[#f5efe6] border border-[#2d3142] text-[#2d3142] px-4 py-2 rounded-full hover:bg-[#e9e4d8] transition font-bold shadow" onClick={onSignUp}>Sign Up</button>
                 </div>
                 {/* Hamburger menu for mobile */}
                 <button className="md:hidden flex flex-col justify-center items-center w-10 h-10" onClick={() => setMenuOpen(!menuOpen)} aria-label="Open menu">
@@ -33,13 +33,13 @@ export default function Nav() {
                 {/* Mobile menu overlay */}
                 {menuOpen && (
                     <div className="fixed inset-0 bg-[#2d3142] bg-opacity-95 flex flex-col items-center justify-center gap-8 md:hidden z-50 animate-fade-in">
-                        <a href="#home" className="text-[#f5efe6] text-xl font-bold" onClick={() => setMenuOpen(false)}>Home</a>
-                        <a href="#features" className="text-[#f5efe6] text-xl font-bold" onClick={() => setMenuOpen(false)}>Features</a>
-                        <a href="#about" className="text-[#f5efe6] text-xl font-bold" onClick={() => setMenuOpen(false)}>About</a>
-                        <a href="#faq" className="text-[#f5efe6] text-xl font-bold" onClick={() => setMenuOpen(false)}>FAQ</a>
-                        <a href="#contact" className="text-[#f5efe6] text-xl font-bold" onClick={() => setMenuOpen(false)}>Contact</a>
-                        <button className="bg-[#f5efe6] text-[#2d3142] px-6 py-2 rounded-full font-bold w-40" onClick={() => setMenuOpen(false)}>Sign In</button>
-                        <button className="bg-[#2d3142] border border-[#f5efe6] text-[#f5efe6] px-6 py-2 rounded-full font-bold w-40" onClick={() => setMenuOpen(false)}>Sign Up</button>
+                        <a href="#home" className="text-[#f5efe6] text-xl font-bold" onClick={() => { setMenuOpen(false); onNavigate(); }}>Home</a>
+                        <a href="#features" className="text-[#f5efe6] text-xl font-bold" onClick={() => { setMenuOpen(false); onNavigate(); }}>Features</a>
+                        <a href="#about" className="text-[#f5efe6] text-xl font-bold" onClick={() => { setMenuOpen(false); onNavigate(); }}>About</a>
+                        <a href="#faq" className="text-[#f5efe6] text-xl font-bold" onClick={() => { setMenuOpen(false); onNavigate(); }}>FAQ</a>
+                        <a href="#contact" className="text-[#f5efe6] text-xl font-bold" onClick={() => { setMenuOpen(false); onNavigate(); }}>Contact</a>
+                        <button className="bg-[#f5efe6] text-[#2d3142] px-6 py-2 rounded-full font-bold w-40" onClick={() => { setMenuOpen(false); onSignIn(); }}>Sign In</button>
+                        <button className="bg-[#2d3142] border border-[#f5efe6] text-[#f5efe6] px-6 py-2 rounded-full font-bold w-40" onClick={() => { setMenuOpen(false); onSignUp(); }}>Sign Up</button>
                     </div>
                 )}
             </div>
