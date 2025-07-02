@@ -1,54 +1,115 @@
-# React + TypeScript + Vite
+# AI FlashCard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+AI FlashCard is a full-stack web application that lets users generate, manage, and study flashcards using OpenAI's GPT models. Users can create flashcard sets manually or generate them from text prompts or uploaded files using AI.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **User Authentication:** Sign up and sign in with email and password.
+- **AI Flashcard Generation:** Generate flashcards from a prompt or uploaded text file using OpenAI GPT.
+- **CRUD Flashcard Sets:** Create, read, update, and delete flashcard sets.
+- **Study Mode:** Review flashcards in a study-friendly modal.
+- **Persistent Storage:** All data is stored in a PostgreSQL database.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend:** React (Vite), TypeScript, Tailwind CSS
+- **Backend:** Node.js, Express, OpenAI API, Multer, CORS
+- **Database:** PostgreSQL
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- npm
+- PostgreSQL database
+- OpenAI API key
+
+### Setup
+
+#### 1. Clone the repository
+
+```sh
+git clone https://github.com/yourusername/aiflashcard.git
+cd aiflashcard
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### 2. Install dependencies
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```sh
+cd Backend
+npm install
+cd ../
+cd AIFlashCard
+npm install
 ```
+
+#### 3. Configure environment variables
+
+Create a `.env` file in the `Backend` directory:
+
+```
+OPENAI_API_KEY=your-openai-api-key-here
+DATABASE_URL=your-postgres-connection-string
+```
+
+#### 4. Set up the database
+
+Create the required tables in your PostgreSQL database:
+
+```sql
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(255) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL
+);
+
+CREATE TABLE decks (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  user_id INTEGER REFERENCES users(id)
+);
+
+CREATE TABLE flashcards (
+  id SERIAL PRIMARY KEY,
+  question TEXT NOT NULL,
+  answer TEXT NOT NULL,
+  deck_id INTEGER REFERENCES decks(id)
+);
+```
+
+#### 5. Start the backend server
+
+```sh
+cd Backend
+npm start
+```
+
+#### 6. Start the frontend
+
+```sh
+cd ../AIFlashCard
+npm run dev
+```
+
+The frontend will run on [http://localhost:5173](http://localhost:5173) and the backend API on [http://localhost:3000](http://localhost:3000).
+
+## Usage
+
+- Sign up or sign in.
+- Create a new flashcard set manually or use the AI generator.
+- Edit, delete, or study your flashcard sets.
+
+## Environment Variables
+
+- `OPENAI_API_KEY` – Your OpenAI API key.
+- `DATABASE_URL` – Your PostgreSQL connection string.
+
+## License
+
+MIT
+
+---
+
+**Note:** Never commit your `.env` file or API keys to
